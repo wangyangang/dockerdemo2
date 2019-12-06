@@ -15,6 +15,3 @@ class PageSerializer(ModelSerializer):
 class IndexView(ModelViewSet):
     queryset = models.Classes.objects.all()
     serializer_class = PageSerializer
-    # def get(self, request):
-    #     #return self.list(request)
-    #     return JsonResponse("{}")
