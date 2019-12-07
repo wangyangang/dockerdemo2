@@ -23,6 +23,27 @@ docker network create demo-net
 docker pull mysql:8.0.16
 #### 运行mysql容器
 docker run -p 3307:3306 --name mysqldb -v /Users/mac/Documents/projects/docker/mysql/conf:/etc/mysql/conf.d -v /Users/mac/Documents/projects/docker/mysql/logs:/logs -v /Users/mac/Documents/projects/docker/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=456wyg -d mysql:8.0.16
+#### 修改加密规则
+use mysql;
+select plugin,authentication_string from user;
+![avatar](static/mysql修改加密规则.png)
+如果跟图中的值不同，请进行下面的操作
+
+```shell script
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER; #修改加密规则 
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; #更新一下用户的密码 
+
+FLUSH PRIVILEGES; # 刷新权限
+
+# 再重置下密码：
+alter user 'root'@'localhost' identified by '123456';
+
+# 最后重启服务。
+```
+
+参考：[mysql报错RuntimeError: cryptography is required for sha256_password or caching_sha2_p](https://blog.csdn.net/p_xiaobai/article/details/85334875)
+
 #### mysql容器接入内部网络 demo-net
 docker network connect demo-net mysql_container_id
 #### 查看网络，确保mysql容器已经接入

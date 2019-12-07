@@ -6,12 +6,24 @@ from django.http import JsonResponse
 from . import models
 
 
-class PageSerializer(ModelSerializer):
+class ClassSerializer(ModelSerializer):
     class Meta:
         model = models.Classes
         fields = '__all__'
 
 
+class TeacherSerializer(ModelSerializer):
+    class Meta:
+        model = models.Teacher
+        fields = '__all__'
+
+
 class IndexView(ModelViewSet):
     queryset = models.Classes.objects.all()
-    serializer_class = PageSerializer
+    serializer_class = ClassSerializer
+
+
+class TeacherListView(ModelViewSet):
+    queryset = models.Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
