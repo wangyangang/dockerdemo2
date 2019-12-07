@@ -78,10 +78,12 @@ WSGI_APPLICATION = 'dockerdemo2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        # 'ENGINE': 'mysql.connector.django',
         'NAME': 'test',
         'USER': 'root',
         'PASSWORD': '456wyg',
-        'PORT': 3307,
+        'PORT': 3306, # 连接docker里的mysql时， -p修改的mysql，在这里访问不到，
+        # 就算改成3307，这里还是要用3306
         'HOST': 'mysqldb'
     }
 }
